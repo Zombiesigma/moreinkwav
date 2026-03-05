@@ -133,7 +133,7 @@ export default function AdminLoginPage() {
                 <Loader2 className="h-6 w-6 animate-spin" />
               ) : (
                 <>
-                  ENTER_THE_VOID
+                  ENTER_DASHBOARD
                   <ArrowRight className="ml-4 h-8 w-8 group-hover:translate-x-2 transition-transform" />
                 </>
               )}
@@ -142,16 +142,10 @@ export default function AdminLoginPage() {
           
           <div className="mt-12 text-center flex flex-col gap-4">
             <button 
-              onClick={() => router.push('/admin/register')}
-              className="text-[10px] uppercase tracking-[0.4em] text-white/20 hover:text-white transition-colors"
-            >
-              NEED_ACCESS? REGISTER_HERE
-            </button>
-            <button 
               onClick={() => router.push('/')}
               className="text-[10px] uppercase tracking-[0.4em] text-white/20 hover:text-white transition-colors"
             >
-              ← RETURN_TO_VOID
+              ← RETURN_HOME
             </button>
           </div>
         </CardContent>
