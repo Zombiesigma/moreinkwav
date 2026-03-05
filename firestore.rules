@@ -63,10 +63,19 @@ service cloud.firestore {
     match /orders/{orderId} {
       allow create: if isSignedIn();
       allow get: if isSignedIn() && (request.auth.uid == resource.data.userId || isAdmin());
-      // Only admins can list all orders. Users can only list their own by using a userId filter in the query.
-      // Filter validation in rules: all documents in the result set must satisfy the condition.
       allow list: if isSignedIn() && (isAdmin() || resource.data.userId == request.auth.uid);
       allow update, delete: if isAdmin();
+    }
+
+    // --- CHAT RULES ---
+    match /chats/{userId} {
+      allow get, write: if isOwner(userId) || isAdmin();
+      allow list: if isAdmin();
+      
+      match /messages/{messageId} {
+        allow get, list, create: if isOwner(userId) || isAdmin();
+        allow update, delete: if isAdmin();
+      }
     }
   }
 }
