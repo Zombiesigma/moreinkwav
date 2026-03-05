@@ -4,25 +4,27 @@ import React, { useEffect, useState, useRef } from 'react';
 import { cn } from '@/lib/utils';
 
 /**
- * @fileOverview Komponen Custom Cursor yang dioptimalkan untuk menghindari hydration mismatch.
- * Menggunakan elemen CSS div murni sebagai kursor untuk stabilitas maksimal.
+ * @fileOverview Komponen Custom Cursor yang dioptimalkan.
+ * Menghilangkan titik putih dan lingkaran berat untuk performa maksimal.
  */
 export function CustomCursor() {
-  const [mounted, setMounted] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   
   const cursorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
     
-    // Nonaktifkan di perangkat mobile
+    // Nonaktifkan di perangkat mobile/layar sentuh
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     if (isTouchDevice && window.innerWidth < 1024) return;
 
     const onMouseMove = (e: MouseEvent) => {
       if (cursorRef.current) {
+        // Gunakan translate3d untuk akselerasi GPU
         cursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
       }
     };
@@ -56,30 +58,29 @@ export function CustomCursor() {
     };
   }, []);
 
-  // Mencegah rendering di server untuk menghindari mismatch atribut transform
   if (!mounted) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-[9999] hidden lg:block overflow-hidden print:hidden">
+    <div className="pointer-events-none fixed inset-0 z-[9999] hidden lg:block overflow-hidden">
       <div 
         ref={cursorRef}
         className={cn(
-          "fixed top-0 left-0 w-8 h-8 -ml-4 -mt-4 transition-all duration-75 ease-out z-[9999] flex items-center justify-center will-change-transform",
-          isClicking && "scale-75",
-          isHovering && "scale-150"
+          "fixed top-0 left-0 w-12 h-12 -ml-6 -mt-6 transition-transform duration-75 ease-out z-[9999] flex items-center justify-center will-change-transform",
+          isClicking && "scale-90 rotate-6",
+          isHovering && "scale-125"
         )}
       >
-        {/* Cursor Body: Minimalist Ring */}
-        <div className={cn(
-          "w-full h-full border border-muted rounded-full transition-all duration-300",
-          isHovering ? "bg-muted/20 border-white" : "bg-transparent border-white/20"
-        )} />
-        
-        {/* Cursor Core: Dot */}
-        <div className={cn(
-          "absolute w-1 h-1 bg-white rounded-full transition-transform duration-300",
-          isHovering && "scale-0"
-        )} />
+        <div className="relative w-full h-full flex items-center justify-center">
+            <img 
+              src="/cur/cursor.png" 
+              alt="Cursor" 
+              className={cn(
+                "w-full h-full object-contain mix-blend-difference transition-opacity duration-300",
+                !isLoaded ? "opacity-0" : "opacity-100"
+              )}
+              onLoad={() => setIsLoaded(true)}
+            />
+        </div>
       </div>
     </div>
   );
