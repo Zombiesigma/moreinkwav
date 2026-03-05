@@ -3,26 +3,22 @@
 import { firebaseConfig } from '@/firebase/config';
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore'
+import { getFirestore } from 'firebase/firestore';
 
 /**
- * @fileOverview Inisialisasi SDK Firebase.
- * Menggunakan config eksplisit untuk memastikan stabilitas di lingkungan Vercel.
+ * Inisialisasi Firebase SDK dengan proteksi ganda untuk lingkungan produksi.
  */
 export function initializeFirebase() {
-  // Jika sudah ada app yang terinisialisasi, gunakan yang sudah ada
-  if (getApps().length > 0) {
-    return getSdks(getApp());
+  let firebaseApp: FirebaseApp;
+
+  if (getApps().length === 0) {
+    // Inisialisasi baru jika belum ada
+    firebaseApp = initializeApp(firebaseConfig);
+  } else {
+    // Gunakan instance yang sudah ada
+    firebaseApp = getApp();
   }
 
-  // Gunakan config statis secara eksplisit.
-  // Ini menghindari kegagalan deteksi lingkungan di platform non-Firebase (Vercel).
-  const firebaseApp = initializeApp(firebaseConfig);
-
-  return getSdks(firebaseApp);
-}
-
-export function getSdks(firebaseApp: FirebaseApp) {
   return {
     firebaseApp,
     auth: getAuth(firebaseApp),
