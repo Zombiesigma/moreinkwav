@@ -22,13 +22,14 @@ export function AdminGuard({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!isUserLoading && !user) {
-      router.push('/admin/login');
+      // Redirect to main login with a redirect back to admin
+      router.push('/login?redirect=/admin');
     }
   }, [user, isUserLoading, router]);
 
   const handleSignOut = async () => {
     await auth.signOut();
-    router.push('/admin/login');
+    router.push('/login');
   };
 
   if (isUserLoading || (user && isAdminLoading)) {
