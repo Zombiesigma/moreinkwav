@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -63,7 +62,7 @@ export function BandProfileForm() {
       stageVideoUrl: '',
       logoUrl: DEFAULT_LOGO,
       galleryTitle: 'STAGE',
-      gallerySubtitle: 'Moments Captured in the Void',
+      gallerySubtitle: 'Moments from the heart of the sound.',
       biography: '',
       contactEmail: '',
       contactPhone: '',
@@ -88,7 +87,7 @@ export function BandProfileForm() {
         stageVideoUrl: profile.stageVideoUrl || '',
         logoUrl: profile.logoUrl || DEFAULT_LOGO,
         galleryTitle: profile.galleryTitle || 'STAGE',
-        gallerySubtitle: profile.gallerySubtitle || 'Moments Captured in the Void',
+        gallerySubtitle: profile.gallerySubtitle || 'Moments from the heart of the sound.',
         biography: profile.biography || '',
         contactEmail: profile.contactEmail || '',
         contactPhone: profile.contactPhone || '',
@@ -103,13 +102,13 @@ export function BandProfileForm() {
     if (!file) return;
     
     const isVideo = file.type.startsWith('video/');
-    const maxSize = isVideo ? 50 * 1024 * 1024 : 10 * 1024 * 1024;
+    const maxSize = isVideo ? 100 * 1024 * 1024 : 10 * 1024 * 1024;
 
     if (file.size > maxSize) {
       toast({ 
         variant: "destructive", 
         title: "File Too Large", 
-        description: `Maksimal ukuran file adalah ${isVideo ? '50MB' : '10MB'}.` 
+        description: `Max size is ${isVideo ? '100MB' : '10MB'}.` 
       });
       return;
     }
@@ -130,8 +129,8 @@ export function BandProfileForm() {
     } catch (error: any) {
       toast({ 
         variant: "destructive", 
-        title: "Upload Gagal", 
-        description: error.message || "Gagal mengunggah file ke storage." 
+        title: "Upload Failed", 
+        description: error.message || "Failed to transmit asset." 
       });
     } finally {
       setUploadingField(null);
@@ -161,19 +160,17 @@ export function BandProfileForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-16 text-white">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-16 text-white pb-24">
         
         <div className="space-y-8 border-b border-white/10 pb-12">
-          <div className="flex justify-between items-end">
-            <div>
-              <h3 className="text-2xl font-headline tracking-tighter uppercase">BRAND_IDENTITY</h3>
-              <p className="text-[10px] uppercase tracking-[0.4em] text-white/20">The face of the void</p>
-            </div>
+          <div>
+            <h3 className="text-2xl font-headline tracking-tighter uppercase">IDENTITY</h3>
+            <p className="text-[10px] uppercase tracking-[0.4em] text-white/20">The face of the band</p>
           </div>
           
           <div className="flex flex-col md:flex-row gap-12 items-start">
             <div className="w-full md:w-1/3 space-y-4">
-               <FormLabel className="text-[10px] uppercase tracking-[0.4em] text-white/40">OFFICIAL_LOGOTYPE</FormLabel>
+               <FormLabel className="text-[10px] uppercase tracking-[0.4em] text-white/40">OFFICIAL_LOGO</FormLabel>
                <div className="relative group aspect-square bg-white/5 border border-white/10 overflow-hidden">
                   {uploadingField === 'logoUrl' && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/60 z-10">
@@ -212,7 +209,7 @@ export function BandProfileForm() {
         </div>
 
         <div className="space-y-8 border-b border-white/10 pb-12">
-          <h3 className="text-2xl font-headline tracking-tighter uppercase">VOID_VISUALS</h3>
+          <h3 className="text-2xl font-headline tracking-tighter uppercase">VISUALS</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="space-y-4">
               <FormLabel className="text-[10px] uppercase tracking-[0.4em] text-white/40 flex items-center gap-2"><Video size={14} /> HERO_VIDEO</FormLabel>
@@ -220,7 +217,7 @@ export function BandProfileForm() {
                 {form.watch('heroVideoUrl') ? (
                   <video src={form.watch('heroVideoUrl')} className="w-full h-full object-cover" autoPlay muted loop playsInline />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-white/10 italic text-[10px] tracking-widest">NO_VIDEO_SYNCED</div>
+                  <div className="w-full h-full flex items-center justify-center text-white/10 italic text-[10px] tracking-widest uppercase">EMPTY</div>
                 )}
                 <label className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all flex flex-col items-center justify-center cursor-pointer">
                   {uploadingField === 'heroVideoUrl' ? <Loader2 className="animate-spin" /> : <Plus size={32} />}
@@ -235,7 +232,7 @@ export function BandProfileForm() {
                 {form.watch('stageVideoUrl') ? (
                   <video src={form.watch('stageVideoUrl')} className="w-full h-full object-cover" autoPlay muted loop playsInline />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-white/10 italic text-[10px] tracking-widest">NO_VIDEO_SYNCED</div>
+                  <div className="w-full h-full flex items-center justify-center text-white/10 italic text-[10px] tracking-widest uppercase">EMPTY</div>
                 )}
                 <label className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all flex flex-col items-center justify-center cursor-pointer">
                   {uploadingField === 'stageVideoUrl' ? <Loader2 className="animate-spin" /> : <Plus size={32} />}
@@ -250,7 +247,7 @@ export function BandProfileForm() {
                 {form.watch('heroImageUrl') ? (
                   <img src={form.watch('heroImageUrl')} className="w-full h-full object-cover grayscale brightness-50" alt="Hero Preview" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-white/10 italic text-[10px] tracking-widest">NO_IMAGE_SYNCED</div>
+                  <div className="w-full h-full flex items-center justify-center text-white/10 italic text-[10px] tracking-widest uppercase">EMPTY</div>
                 )}
                 <label className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all flex flex-col items-center justify-center cursor-pointer">
                   {uploadingField === 'heroImageUrl' ? <Loader2 className="animate-spin" /> : <Plus size={32} />}
@@ -263,7 +260,7 @@ export function BandProfileForm() {
 
         <div className="space-y-8 border-b border-white/10 pb-12">
           <div className="flex justify-between items-center">
-            <h3 className="text-2xl font-headline tracking-tighter uppercase">THE_BEINGS</h3>
+            <h3 className="text-2xl font-headline tracking-tighter uppercase">MEMBERS</h3>
             <Button type="button" onClick={() => append({ name: '', role: '', photoUrl: '' })} variant="impact" size="sm" className="h-10 px-6 text-[10px]"><Plus size={14} className="mr-2" /> ADD_MEMBER</Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -291,39 +288,39 @@ export function BandProfileForm() {
         </div>
 
         <div className="space-y-8 border-b border-white/10 pb-12">
-          <h3 className="text-2xl font-headline tracking-tighter uppercase">SOCIAL_CHANNELS</h3>
+          <h3 className="text-2xl font-headline tracking-tighter uppercase">SOCIALS</h3>
           <div className="grid md:grid-cols-2 gap-8">
             <FormField control={form.control} name="socialLinks.instagram" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[10px] uppercase tracking-[0.4em] text-white/40">INSTAGRAM_URL</FormLabel>
+                <FormLabel className="text-[10px] uppercase tracking-[0.4em] text-white/40">INSTAGRAM</FormLabel>
                 <FormControl><Input className="bg-transparent border-b border-white/10 rounded-none h-10 focus:border-white transition-all" {...field} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="socialLinks.spotify" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[10px] uppercase tracking-[0.4em] text-white/40">SPOTIFY_URL</FormLabel>
+                <FormLabel className="text-[10px] uppercase tracking-[0.4em] text-white/40">SPOTIFY</FormLabel>
                 <FormControl><Input className="bg-transparent border-b border-white/10 rounded-none h-10 focus:border-white transition-all" {...field} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="socialLinks.youtube" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[10px] uppercase tracking-[0.4em] text-white/40">YOUTUBE_URL</FormLabel>
+                <FormLabel className="text-[10px] uppercase tracking-[0.4em] text-white/40">YOUTUBE</FormLabel>
                 <FormControl><Input className="bg-transparent border-b border-white/10 rounded-none h-10 focus:border-white transition-all" {...field} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="socialLinks.appleMusic" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[10px] uppercase tracking-[0.4em] text-white/40">APPLE_MUSIC_URL</FormLabel>
+                <FormLabel className="text-[10px] uppercase tracking-[0.4em] text-white/40">APPLE_MUSIC</FormLabel>
                 <FormControl><Input className="bg-transparent border-b border-white/10 rounded-none h-10 focus:border-white transition-all" {...field} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="socialLinks.tiktok" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[10px] uppercase tracking-[0.4em] text-white/40">TIKTOK_URL</FormLabel>
+                <FormLabel className="text-[10px] uppercase tracking-[0.4em] text-white/40">TIKTOK</FormLabel>
                 <FormControl><Input className="bg-transparent border-b border-white/10 rounded-none h-10 focus:border-white transition-all" {...field} /></FormControl>
                 <FormMessage />
               </FormItem>
@@ -334,8 +331,8 @@ export function BandProfileForm() {
         <div className="space-y-12">
           <FormField control={form.control} name="biography" render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[10px] uppercase tracking-[0.4em] text-white/40">THE_SOUL_STORY (BIO)</FormLabel>
-              <FormControl><Textarea placeholder="The unfiltered sound flows..." className="bg-transparent border-2 border-white/10 rounded-none min-h-[200px] p-6 text-xl font-headline focus:border-white transition-all leading-relaxed" {...field} /></FormControl>
+              <FormLabel className="text-[10px] uppercase tracking-[0.4em] text-white/40">SOUL_STORY (BIO)</FormLabel>
+              <FormControl><Textarea placeholder="The story flows..." className="bg-transparent border-2 border-white/10 rounded-none min-h-[200px] p-6 text-xl font-body italic focus:border-white transition-all leading-relaxed" {...field} /></FormControl>
               <FormMessage />
             </FormItem>
           )} />
@@ -349,7 +346,7 @@ export function BandProfileForm() {
             size="xl"
             className="w-full h-24 text-2xl"
           >
-            {isSubmitting ? <Loader2 className="animate-spin h-8 w-8" /> : <><Save className="mr-4 h-8 w-8" /> SYNC_ENTIRE_VOID</>}
+            {isSubmitting ? <Loader2 className="animate-spin h-8 w-8" /> : <><Save className="mr-4 h-8 w-8" /> SAVE_PROFILE</>}
           </Button>
         </div>
       </form>
