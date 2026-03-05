@@ -35,9 +35,10 @@ export function SplashScreen() {
   return (
     <div 
       className={cn(
-        "fixed inset-0 z-[100] bg-black flex items-center justify-center transition-opacity duration-[1500ms] ease-in-out",
+        "fixed inset-0 z-[100] bg-black flex items-center justify-center transition-opacity ease-in-out",
         isFading ? "opacity-0 pointer-events-none" : "opacity-100"
       )}
+      style={{ transitionDuration: '1500ms' }}
     >
       <div className="relative z-10 text-center px-6 flex flex-col items-center w-full max-w-lg mx-auto">
         <img 
