@@ -6,21 +6,18 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore'
 
 /**
- * @fileOverview Inisialisasi SDK Firebase yang lebih tangguh untuk lingkungan Vercel.
+ * @fileOverview Inisialisasi SDK Firebase.
+ * Menggunakan config eksplisit untuk memastikan stabilitas di lingkungan Vercel.
  */
 export function initializeFirebase() {
+  // Jika sudah ada app yang terinisialisasi, gunakan yang sudah ada
   if (getApps().length > 0) {
     return getSdks(getApp());
   }
 
-  let firebaseApp: FirebaseApp;
-  try {
-    // Mencoba inisialisasi otomatis (Firebase App Hosting)
-    firebaseApp = initializeApp();
-  } catch (e) {
-    // Fallback ke config statis jika inisialisasi tanpa argumen gagal
-    firebaseApp = initializeApp(firebaseConfig);
-  }
+  // Gunakan config statis secara eksplisit.
+  // Ini menghindari kegagalan deteksi lingkungan di platform non-Firebase (Vercel).
+  const firebaseApp = initializeApp(firebaseConfig);
 
   return getSdks(firebaseApp);
 }
