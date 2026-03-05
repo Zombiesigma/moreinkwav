@@ -35,16 +35,25 @@ export default function AdminLoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) return;
+    const cleanEmail = email.trim();
+    const cleanPassword = password.trim();
+
+    if (!cleanEmail || !cleanPassword) return;
 
     setLoading(true);
     try {
-      await initiateEmailSignIn(auth, email, password);
+      await initiateEmailSignIn(auth, cleanEmail, cleanPassword);
     } catch (error: any) {
+      console.error("Admin Login Error:", error.code);
+      let message = "Check your admin credentials.";
+      if (error.code === 'auth/invalid-credential') {
+        message = "Incorrect email or password for admin access.";
+      }
+      
       toast({
         variant: "destructive",
         title: "Login Gagal",
-        description: error.message || "Pastikan email dan password benar.",
+        description: message,
       });
       setLoading(false);
     }
