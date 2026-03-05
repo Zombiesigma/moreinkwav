@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -5,7 +6,7 @@ import { AdminGuard } from '@/components/admin/AdminGuard';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { useAuth, useFirestore, useDoc, useMemoFirebase, useCollection } from '@/firebase';
-import { LogOut, Music, MapPin, Image as ImageIcon, User, LayoutDashboard, Activity, ShoppingBag, ClipboardList } from 'lucide-react';
+import { LogOut, Music, MapPin, Image as ImageIcon, User, LayoutDashboard, Activity, ShoppingBag, ClipboardList, MessageSquare } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { BandProfileForm } from '@/components/admin/BandProfileForm';
 import { MusicManager } from '@/components/admin/MusicManager';
@@ -13,14 +14,11 @@ import { TourManager } from '@/components/admin/TourManager';
 import { GalleryManager } from '@/components/admin/GalleryManager';
 import { MerchManager } from '@/components/admin/MerchManager';
 import { OrderManager } from '@/components/admin/OrderManager';
+import { ChatManager } from '@/components/admin/ChatManager';
 import { doc, collection } from 'firebase/firestore';
 
 const DEFAULT_LOGO = "https://raw.githubusercontent.com/Zombiesigma/moreink/main/LOGO%20MORINK%20(White).jpg";
 
-/**
- * Inner component that performs data fetching.
- * This is only rendered inside AdminGuard, ensuring admin status is verified first.
- */
 function AdminDashboardContent() {
   const auth = useAuth();
   const router = useRouter();
@@ -34,16 +32,18 @@ function AdminDashboardContent() {
   const photosQuery = useMemoFirebase(() => collection(db, 'photos'), [db]);
   const merchQuery = useMemoFirebase(() => collection(db, 'merch'), [db]);
   const ordersQuery = useMemoFirebase(() => collection(db, 'orders'), [db]);
+  const chatQuery = useMemoFirebase(() => collection(db, 'chats'), [db]);
 
   const { data: albums } = useCollection(albumsQuery);
   const { data: tourDates } = useCollection(tourQuery);
   const { data: photos } = useCollection(photosQuery);
   const { data: merchItems } = useCollection(merchQuery);
   const { data: orders } = useCollection(ordersQuery);
+  const { data: chats } = useCollection(chatQuery);
 
   const handleSignOut = async () => {
     await auth.signOut();
-    router.push('/admin/login');
+    router.push('/login');
   };
 
   const currentLogo = profile?.logoUrl || DEFAULT_LOGO;
@@ -63,7 +63,7 @@ function AdminDashboardContent() {
           </div>
           <div className="flex flex-col">
             <h1 className="font-headline text-2xl tracking-tight hidden sm:block leading-none text-muted">
-              ADMIN_VOID
+              ADMIN
             </h1>
           </div>
         </div>
@@ -82,14 +82,17 @@ function AdminDashboardContent() {
             <TabsTrigger value="dashboard" className="data-[state=active]:bg-muted data-[state=active]:text-black rounded-none px-6 py-4 font-headline uppercase tracking-widest flex items-center gap-2 transition-all">
               <LayoutDashboard size={18} /> OVERVIEW
             </TabsTrigger>
+            <TabsTrigger value="chats" className="data-[state=active]:bg-muted data-[state=active]:text-black rounded-none px-6 py-4 font-headline uppercase tracking-widest flex items-center gap-2 transition-all">
+              <MessageSquare size={18} /> CHATS
+            </TabsTrigger>
             <TabsTrigger value="orders" className="data-[state=active]:bg-muted data-[state=active]:text-black rounded-none px-6 py-4 font-headline uppercase tracking-widest flex items-center gap-2 transition-all">
               <ClipboardList size={18} /> ORDERS
             </TabsTrigger>
             <TabsTrigger value="profile" className="data-[state=active]:bg-muted data-[state=active]:text-black rounded-none px-6 py-4 font-headline uppercase tracking-widest flex items-center gap-2 transition-all">
-              <User size={18} /> SOUL
+              <User size={18} /> IDENTITY
             </TabsTrigger>
             <TabsTrigger value="music" className="data-[state=active]:bg-muted data-[state=active]:text-black rounded-none px-6 py-4 font-headline uppercase tracking-widest flex items-center gap-2 transition-all">
-              <Music size={18} /> SOUND
+              <Music size={18} /> MUSIC
             </TabsTrigger>
             <TabsTrigger value="tour" className="data-[state=active]:bg-muted data-[state=active]:text-black rounded-none px-6 py-4 font-headline uppercase tracking-widest flex items-center gap-2 transition-all">
               <MapPin size={18} /> ROAD
@@ -103,7 +106,13 @@ function AdminDashboardContent() {
           </TabsList>
 
           <TabsContent value="dashboard" className="animate-fade-in space-y-8">
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-8">
+              <div className="p-8 border border-white/10 bg-white/[0.02] group hover:bg-white/5 transition-all">
+                <p className="text-5xl font-headline group-hover:text-muted transition-all text-glow">{chats?.length || 0}</p>
+                <p className="text-[10px] uppercase tracking-[0.4em] text-white/40 mt-2 flex items-center gap-2">
+                  <MessageSquare size={12} /> CHATS
+                </p>
+              </div>
               <div className="p-8 border border-white/10 bg-white/[0.02] group hover:bg-white/5 transition-all">
                 <p className="text-5xl font-headline group-hover:text-muted transition-all text-glow">{orders?.length || 0}</p>
                 <p className="text-[10px] uppercase tracking-[0.4em] text-white/40 mt-2 flex items-center gap-2">
@@ -113,7 +122,7 @@ function AdminDashboardContent() {
               <div className="p-8 border border-white/10 bg-white/[0.02] group hover:bg-white/5 transition-all">
                 <p className="text-5xl font-headline group-hover:text-muted transition-all text-glow">{albums?.length || 0}</p>
                 <p className="text-[10px] uppercase tracking-[0.4em] text-white/40 mt-2 flex items-center gap-2">
-                  <Music size={12} /> SOUNDS
+                  <Music size={12} /> MUSIC
                 </p>
               </div>
               <div className="p-8 border border-white/10 bg-white/[0.02] group hover:bg-white/5 transition-all">
@@ -141,15 +150,16 @@ function AdminDashboardContent() {
                 <Activity size={300} strokeWidth={0.5} />
               </div>
               <h3 className="text-6xl md:text-[8rem] font-headline mb-6 tracking-tighter animate-flicker leading-none relative z-10 text-muted">
-                VOID_SYNC
+                SYNC_OPTIMAL
               </h3>
               <div className="flex items-center gap-4 px-6 py-3 bg-white/5 border border-white/10 w-fit relative z-10">
                 <Activity className="text-accent animate-pulse" size={20} />
-                <span className="text-[10px] uppercase tracking-[0.5em] font-black">SYSTEM_RESONANCE_OPTIMAL</span>
+                <span className="text-[10px] uppercase tracking-[0.5em] font-black">SYSTEM_OPTIMAL</span>
               </div>
             </div>
           </TabsContent>
 
+          <TabsContent value="chats" className="animate-fade-in"><ChatManager /></TabsContent>
           <TabsContent value="orders" className="animate-fade-in"><OrderManager /></TabsContent>
           <TabsContent value="profile" className="animate-fade-in"><BandProfileForm /></TabsContent>
           <TabsContent value="music" className="animate-fade-in"><MusicManager /></TabsContent>
@@ -160,7 +170,7 @@ function AdminDashboardContent() {
       </main>
 
       <footer className="p-12 border-t border-white/5 text-center">
-        <p className="text-white/10 text-[10px] uppercase tracking-[1em] font-black">INK_ADMIN_VOID // MMXXIV</p>
+        <p className="text-white/10 text-[10px] uppercase tracking-[1em] font-black">MORE INK ADMIN // MMXXIV</p>
       </footer>
     </div>
   );
