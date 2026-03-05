@@ -1,0 +1,72 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * RBAC System for 'More Ink.' Band Management.
+     */
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // --- COLLECTION RULES ---
+
+    match /roles_admin/{userId} {
+      allow get: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow list: if isAdmin();
+      allow create: if isOwner(userId);
+      allow update, delete: if isAdmin();
+    }
+
+    match /users/{userId} {
+      allow get: if isSignedIn();
+      allow create, update: if isOwner(userId);
+      allow delete: if isAdmin();
+    }
+
+    match /band_profile/mainProfile {
+      allow get, list: if true;
+      allow create, update: if isAdmin();
+      allow delete: if false; 
+    }
+
+    match /albums/{albumId} {
+      allow get, list: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /tour_dates/{tourDateId} {
+      allow get, list: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /photos/{photoId} {
+      allow get, list: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /merch/{merchId} {
+      allow get, list: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /orders/{orderId} {
+      allow create: if isSignedIn();
+      allow get: if isSignedIn() && (request.auth.uid == resource.data.userId || isAdmin());
+      // Only admins can list all orders. Users can only list their own by using a userId filter in the query.
+      // Filter validation in rules: all documents in the result set must satisfy the condition.
+      allow list: if isSignedIn() && (isAdmin() || resource.data.userId == request.auth.uid);
+      allow update, delete: if isAdmin();
+    }
+  }
+}

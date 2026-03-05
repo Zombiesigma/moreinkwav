@@ -1,0 +1,64 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero-bg-local",
+      "description": "Background utama More Ink.",
+      "imageUrl": "/src/img/bg.jpeg",
+      "imageHint": "band background"
+    },
+    {
+      "id": "hero-bg",
+      "description": "Band performing on stage with smoke and lights",
+      "imageUrl": "https://images.unsplash.com/photo-1551043692-fc37bc4676b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y29uY2VydCUyMHN0YWdlfGVufDB8fHx8MTc3MjUxMTIyM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "concert stage"
+    },
+    {
+      "id": "band-portrait",
+      "description": "Black and white portrait of the band More Ink.",
+      "imageUrl": "https://images.unsplash.com/photo-1598387181032-a3103a2db5b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxyb2NrJTIwYmFuZHxlbnwwfHx8fDE3NzI0OTMzOTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "rock band"
+    },
+    {
+      "id": "studio-session",
+      "description": "Band members in a recording studio",
+      "imageUrl": "https://images.unsplash.com/photo-1626126525134-fbbc07afb32c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cmVjb3JkaW5nJTIwc3R1ZGlvfGVufDB8fHx8MTc3MjQ4NjM4Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "recording studio"
+    },
+    {
+      "id": "live-1",
+      "description": "Close up of guitarist performing live",
+      "imageUrl": "https://images.unsplash.com/photo-1763645468036-0cfb9740b327?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxndWl0YXJpc3QlMjBzdGFnZXxlbnwwfHx8fDE3NzI1MTEyMjR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "guitarist stage"
+    },
+    {
+      "id": "live-2",
+      "description": "Drummer in action during a concert",
+      "imageUrl": "https://images.unsplash.com/photo-1771179747384-78689088a3a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxkcnVtbWVyJTIwcGVyZm9ybWFuY2V8ZW58MHx8fHwxNzcyNTExMjIzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "drummer performance"
+    },
+    {
+      "id": "live-3",
+      "description": "Vocalist singing with passion",
+      "imageUrl": "https://images.unsplash.com/photo-1723714807802-843026b1ff0f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxzaW5nZXIlMjBjb25jZXJ0fGVufDB8fHx8MTc3MjUxMTIyM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "singer concert"
+    },
+    {
+      "id": "abstract-ink",
+      "description": "Abstract ink wash pattern representing the band's name",
+      "imageUrl": "https://images.unsplash.com/photo-1768408279662-d31ad1a1cda6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxpbmslMjB3YXNofGVufDB8fHx8MTc3MjUxMTIyM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ink wash"
+    },
+    {
+      "id": "album-art-1",
+      "description": "Album cover for Resonance",
+      "imageUrl": "https://images.unsplash.com/photo-1557264322-b44d383a2906?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGRhcmt8ZW58MHx8fHwxNzcyNDYwNTI3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract dark"
+    },
+    {
+      "id": "album-art-2",
+      "description": "Album cover for Echoes",
+      "imageUrl": "https://images.unsplash.com/photo-1755018237005-f30fd88af1eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtaW5pbWFsaXN0JTIwYXJ0fGVufDB8fHx8MTc3MjUxMTIyM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "minimalist art"
+    }
+  ]
+}

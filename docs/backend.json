@@ -1,0 +1,196 @@
+
+{
+  "entities": {
+    "BandProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "BandProfile",
+      "type": "object",
+      "description": "Represents the core information, biography, and contact details for the 'More Ink.' band.",
+      "properties": {
+        "id": { "type": "string" },
+        "logoUrl": { "type": "string", "format": "uri" },
+        "heroHeadline": { "type": "string" },
+        "heroTagline": { "type": "string" },
+        "heroImageUrl": { "type": "string", "format": "uri" },
+        "heroVideoUrl": { "type": "string", "format": "uri" },
+        "stageVideoUrl": { "type": "string", "format": "uri" },
+        "galleryTitle": { "type": "string" },
+        "gallerySubtitle": { "type": "string" },
+        "biography": { "type": "string" },
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "role": { "type": "string" },
+              "photoUrl": { "type": "string", "format": "uri" }
+            }
+          }
+        },
+        "socialLinks": {
+          "type": "object",
+          "properties": {
+            "instagram": { "type": "string" },
+            "spotify": { "type": "string" },
+            "youtube": { "type": "string" },
+            "appleMusic": { "type": "string" },
+            "tiktok": { "type": "string" }
+          }
+        },
+        "contactEmail": { "type": "string", "format": "email" },
+        "contactPhone": { "type": "string" },
+        "bookingInfo": { "type": "string" },
+        "lastUpdated": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "biography", "contactEmail", "lastUpdated"]
+    },
+    "Album": {
+      "title": "Album",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "releaseDate": { "type": "string", "format": "date" },
+        "coverArtUrl": { "type": "string", "format": "uri" },
+        "spotifyUrl": { "type": "string", "format": "uri" },
+        "description": { "type": "string" }
+      },
+      "required": ["id", "title", "releaseDate", "coverArtUrl"]
+    },
+    "MerchItem": {
+      "title": "MerchItem",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "price": { "type": "string" },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string", "format": "uri" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "price", "imageUrl"]
+    },
+    "TourDate": {
+      "title": "TourDate",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "venueName": { "type": "string" },
+        "city": { "type": "string" },
+        "ticketPurchaseUrl": { "type": "string" },
+        "isUpcoming": { "type": "boolean" }
+      },
+      "required": ["id", "date", "venueName", "city"]
+    },
+    "Photo": {
+      "title": "Photo",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "imageUrl": { "type": "string", "description": "Main cover image for the gallery" },
+        "galleryImages": { "type": "array", "items": { "type": "string" }, "description": "Additional images for the event" },
+        "title": { "type": "string" },
+        "venue": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "imageUrl", "title"]
+    },
+    "Order": {
+      "title": "Order",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "merchId": { "type": "string" },
+        "merchName": { "type": "string" },
+        "price": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "shipped", "completed"] },
+        "shippingDetails": {
+          "type": "object",
+          "properties": {
+            "fullName": { "type": "string" },
+            "address": { "type": "string", "description": "Nama jalan, nomor rumah, gedung" },
+            "rt": { "type": "string" },
+            "rw": { "type": "string" },
+            "subDistrict": { "type": "string", "description": "Kelurahan atau Kecamatan" },
+            "city": { "type": "string" },
+            "postalCode": { "type": "string" },
+            "phone": { "type": "string" },
+            "notes": { "type": "string", "description": "Patokan atau catatan tambahan" }
+          }
+        },
+        "paymentDetails": {
+          "type": "object",
+          "properties": {
+            "method": { "type": "string" },
+            "transactionProofUrl": { "type": "string" }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "merchId", "status", "shippingDetails", "createdAt"]
+    },
+    "AdminRole": {
+      "title": "AdminRole",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "assignedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string" },
+        "createdAt": { "type": "string" }
+      }
+    }
+  },
+  "auth": {
+    "providers": ["password", "anonymous"]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/roles_admin/{userId}",
+        "definition": { "entityName": "AdminRole" }
+      },
+      {
+        "path": "/users/{userId}",
+        "definition": { "entityName": "UserProfile" }
+      },
+      {
+        "path": "/band_profile/mainProfile",
+        "definition": { "entityName": "BandProfile" }
+      },
+      {
+        "path": "/albums/{albumId}",
+        "definition": { "entityName": "Album" }
+      },
+      {
+        "path": "/tour_dates/{tourDateId}",
+        "definition": { "entityName": "TourDate" }
+      },
+      {
+        "path": "/photos/{photoId}",
+        "definition": { "entityName": "Photo" }
+      },
+      {
+        "path": "/merch/{merchId}",
+        "definition": { "entityName": "MerchItem" }
+      },
+      {
+        "path": "/orders/{orderId}",
+        "definition": { "entityName": "Order" }
+      }
+    ]
+  }
+}

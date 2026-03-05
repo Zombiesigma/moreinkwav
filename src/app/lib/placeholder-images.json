@@ -1,0 +1,35 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "hero-bg",
+      "description": "More Ink. Hero Background - High Energy Concert",
+      "imageUrl": "https://images.unsplash.com/photo-1551043692-fc37bc4676b1?q=80&w=1920",
+      "imageHint": "concert stage"
+    },
+    {
+      "id": "merch-shirt-1",
+      "description": "VOID T-Shirt Black",
+      "imageUrl": "https://picsum.photos/seed/inkmerch1/800/1000",
+      "imageHint": "black t-shirt"
+    },
+    {
+      "id": "merch-hoodie-1",
+      "description": "RESONANCE Hoodie",
+      "imageUrl": "https://picsum.photos/seed/inkmerch2/800/1000",
+      "imageHint": "black hoodie"
+    },
+    {
+      "id": "merch-vinyl-1",
+      "description": "RESONANCE Limited Vinyl",
+      "imageUrl": "https://picsum.photos/seed/inkmerch3/800/1000",
+      "imageHint": "vinyl record"
+    },
+    {
+      "id": "merch-cap-1",
+      "description": "INK Snapback",
+      "imageUrl": "https://picsum.photos/seed/inkmerch4/800/1000",
+      "imageHint": "black cap"
+    }
+  ]
+}
