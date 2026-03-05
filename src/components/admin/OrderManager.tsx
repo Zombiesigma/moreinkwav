@@ -40,8 +40,8 @@ export function OrderManager() {
     updateDocumentNonBlocking(orderRef, { status: newStatus });
     
     toast({
-      title: "STATUS_SYNCED",
-      description: `Order ${orderId} is now ${newStatus.toUpperCase()}.`,
+      title: "STATUS_UPDATED",
+      description: `Order is now ${newStatus.toUpperCase()}.`,
     });
 
     if (newStatus === 'confirmed') {
@@ -52,12 +52,12 @@ export function OrderManager() {
   };
 
   const deleteOrder = (orderId: string) => {
-    if (confirm('Disconnect this order from the void forever?')) {
+    if (confirm('Permanently remove this order?')) {
       const orderRef = doc(db, 'orders', orderId);
       deleteDocumentNonBlocking(orderRef);
       toast({
-        title: "ORDER_DISCONNECTED",
-        description: "Order removed from database.",
+        title: "ORDER_REMOVED",
+        description: "Order deleted from database.",
       });
     }
   };
@@ -85,11 +85,11 @@ export function OrderManager() {
     <div className="space-y-12">
       <div className="flex items-end justify-between border-b border-white/10 pb-6">
         <div>
-          <h2 className="text-4xl font-headline tracking-tighter text-muted">MATERIAL_TRANSACTIONS</h2>
-          <p className="text-[10px] uppercase tracking-[0.4em] text-white/20 mt-2">Managing Beings Frequencies</p>
+          <h2 className="text-4xl font-headline tracking-tighter text-muted">TRANSACTIONS</h2>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-white/20 mt-2">Managing merch orders</p>
         </div>
         <div className="text-[10px] uppercase tracking-[0.4em] text-white/40 font-black">
-          {orders?.length || 0} TOTAL_SYNC
+          {orders?.length || 0} TOTAL
         </div>
       </div>
 
@@ -100,7 +100,6 @@ export function OrderManager() {
             <Card key={order.id} className="bg-[#1E201E] border-white/5 rounded-none overflow-hidden hover:border-muted/30 transition-all duration-500 shadow-2xl group relative">
               <div className="grid lg:grid-cols-12 gap-0">
                 
-                {/* Status & ID Column */}
                 <div className="lg:col-span-3 p-8 bg-black/40 border-r border-white/5 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-2 mb-4">
@@ -119,7 +118,7 @@ export function OrderManager() {
                         size="icon" 
                         className="h-8 w-8 rounded-none border-white/10 hover:bg-white hover:text-black transition-all"
                         onClick={() => handlePrint(order.id)}
-                        title="RE-PRINT_LABEL"
+                        title="Print Label"
                       >
                         <Printer size={14} />
                       </Button>
@@ -140,7 +139,6 @@ export function OrderManager() {
                   </div>
                 </div>
 
-                {/* Order Content & Pricing */}
                 <div className="lg:col-span-5 p-8 flex flex-col justify-between">
                   <div className="space-y-8">
                     <div className="flex items-start gap-4">
@@ -148,7 +146,7 @@ export function OrderManager() {
                         <Package size={20} className="text-muted" />
                       </div>
                       <div>
-                        <p className="text-[8px] uppercase tracking-widest text-white/20 font-black mb-1">MATERIAL_ITEM</p>
+                        <p className="text-[8px] uppercase tracking-widest text-white/20 font-black mb-1">PRODUCT</p>
                         <h5 className="text-2xl font-headline tracking-tight text-white">{order.merchName}</h5>
                       </div>
                     </div>
@@ -158,7 +156,7 @@ export function OrderManager() {
                         <User size={20} className="text-muted" />
                       </div>
                       <div>
-                        <p className="text-[8px] uppercase tracking-widest text-white/20 font-black mb-1">BEING_ENTITY</p>
+                        <p className="text-[8px] uppercase tracking-widest text-white/20 font-black mb-1">CUSTOMER</p>
                         <h5 className="text-xl font-headline text-white">{s?.fullName}</h5>
                         <div className="flex flex-col gap-1 mt-2">
                           <div className="flex items-center gap-2 text-white/40 text-xs"><Mail size={12} /> {order.userEmail}</div>
@@ -168,29 +166,27 @@ export function OrderManager() {
                     </div>
                   </div>
 
-                  {/* Pricing Overview - Admin View */}
                   <div className="mt-8 pt-6 border-t border-white/5 flex items-center gap-6">
                     <div className="p-3 bg-white/5 border border-white/10 flex items-center gap-3">
                       <Banknote className="text-muted" size={16} />
                       <div>
-                        <p className="text-[7px] uppercase tracking-widest text-white/20 font-black">TOTAL_REVENUE</p>
+                        <p className="text-[7px] uppercase tracking-widest text-white/20 font-black">TOTAL</p>
                         <p className="font-headline text-xl text-muted leading-none">{order.price}</p>
                       </div>
                     </div>
                     <div className="text-[8px] uppercase tracking-[0.4em] text-accent font-black">
-                      SYNC_PAYMENT: COD
+                      PAYMENT: COD
                     </div>
                   </div>
                 </div>
 
-                {/* Detailed Shipping Details */}
                 <div className="lg:col-span-4 p-8 bg-white/[0.01] border-l border-white/5 relative">
                   <div className="flex items-start gap-4">
                     <div className="h-12 w-12 flex items-center justify-center bg-white/5 border border-white/10 shrink-0">
                       <MapPin size={20} className="text-muted" />
                     </div>
                     <div className="flex-grow">
-                      <p className="text-[8px] uppercase tracking-widest text-white/20 font-black mb-1">DESTINATION_VOID</p>
+                      <p className="text-[8px] uppercase tracking-widest text-white/20 font-black mb-1">DESTINATION</p>
                       <div className="space-y-1">
                         <p className="text-sm font-body italic text-white/60 leading-tight">
                           {s?.address}
