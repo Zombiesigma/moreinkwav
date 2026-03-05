@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
@@ -161,8 +162,8 @@ export default function MyOrdersPage() {
                 </Button>
               )}
               <Button variant="outline" className="h-14 rounded-none border-white/10 text-[10px] tracking-[0.4em] font-black uppercase hover:bg-white hover:text-black transition-all" asChild>
-                <Link href="/contact">
-                  <MessageSquare className="mr-3 h-4 w-4" /> CONTACT_ADMIN
+                <Link href="/chat">
+                  <MessageSquare className="mr-3 h-4 w-4" /> CHAT_WITH_ADMIN
                 </Link>
               </Button>
               <p className="text-[9px] uppercase tracking-[0.3em] text-white/10 text-center">
