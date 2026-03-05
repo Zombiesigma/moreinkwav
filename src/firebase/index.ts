@@ -5,7 +5,9 @@ import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore'
 
-// IMPORTANT: DO NOT MODIFY THIS FUNCTION
+/**
+ * @fileOverview Inisialisasi SDK Firebase yang lebih tangguh untuk lingkungan Vercel.
+ */
 export function initializeFirebase() {
   if (getApps().length > 0) {
     return getSdks(getApp());
@@ -13,10 +15,10 @@ export function initializeFirebase() {
 
   let firebaseApp: FirebaseApp;
   try {
-    // Attempt to initialize via Firebase App Hosting environment variables (for production)
+    // Mencoba inisialisasi otomatis (Firebase App Hosting)
     firebaseApp = initializeApp();
   } catch (e) {
-    // Fallback to config object (for development or if automatic init fails)
+    // Fallback ke config statis jika inisialisasi tanpa argumen gagal
     firebaseApp = initializeApp(firebaseConfig);
   }
 
