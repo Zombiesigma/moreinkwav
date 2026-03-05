@@ -114,14 +114,14 @@
           "type": "object",
           "properties": {
             "fullName": { "type": "string" },
-            "address": { "type": "string", "description": "Nama jalan, nomor rumah, gedung" },
+            "address": { "type": "string" },
             "rt": { "type": "string" },
             "rw": { "type": "string" },
-            "subDistrict": { "type": "string", "description": "Kelurahan atau Kecamatan" },
+            "subDistrict": { "type": "string" },
             "city": { "type": "string" },
             "postalCode": { "type": "string" },
             "phone": { "type": "string" },
-            "notes": { "type": "string", "description": "Patokan atau catatan tambahan" }
+            "notes": { "type": "string" }
           }
         },
         "paymentDetails": {
@@ -134,6 +134,29 @@
         "createdAt": { "type": "string", "format": "date-time" }
       },
       "required": ["id", "userId", "merchId", "status", "shippingDetails", "createdAt"]
+    },
+    "ChatSession": {
+      "title": "ChatSession",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "userName": { "type": "string" },
+        "lastMessage": { "type": "string" },
+        "lastUpdated": { "type": "string", "format": "date-time" },
+        "unreadCount": { "type": "number" }
+      }
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "senderId": { "type": "string" },
+        "text": { "type": "string" },
+        "isAdmin": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
     },
     "AdminRole": {
       "title": "AdminRole",
@@ -149,6 +172,8 @@
       "properties": {
         "uid": { "type": "string" },
         "email": { "type": "string" },
+        "fullName": { "type": "string" },
+        "phone": { "type": "string" },
         "role": { "type": "string" },
         "createdAt": { "type": "string" }
       }
@@ -190,6 +215,14 @@
       {
         "path": "/orders/{orderId}",
         "definition": { "entityName": "Order" }
+      },
+      {
+        "path": "/chats/{userId}",
+        "definition": { "entityName": "ChatSession" }
+      },
+      {
+        "path": "/chats/{userId}/messages/{messageId}",
+        "definition": { "entityName": "ChatMessage" }
       }
     ]
   }
