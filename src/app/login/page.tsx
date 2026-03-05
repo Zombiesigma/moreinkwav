@@ -30,20 +30,38 @@ function LoginForm() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) return;
+    // Membersihkan input dari spasi gaib (Trimming)
+    const cleanEmail = email.trim();
+    const cleanPassword = password.trim();
+
+    if (!cleanEmail || !cleanPassword) {
+      toast({
+        variant: "destructive",
+        title: "INCOMPLETE",
+        description: "Email and password are required.",
+      });
+      return;
+    }
 
     setLoading(true);
     try {
-      await initiateEmailSignIn(auth, email, password);
+      await initiateEmailSignIn(auth, cleanEmail, cleanPassword);
       toast({
         title: "SYNCED",
         description: "Welcome back. Identity verified.",
       });
     } catch (error: any) {
+      console.error("Login Error Trace:", error.code);
+      let message = "Invalid email or password.";
+      
+      if (error.code === 'auth/invalid-credential') {
+        message = "Authentication failed. Check your email and password again.";
+      }
+
       toast({
         variant: "destructive",
         title: "Sync Failed",
-        description: error.message || "Invalid parameters.",
+        description: message,
       });
       setLoading(false);
     }
