@@ -5,8 +5,9 @@ import { Toaster } from '@/components/ui/toaster';
 import { CustomCursor } from '@/components/CustomCursor';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.moreink.web.id'),
   title: {
-    default: 'More Ink. | Original Sound from Ciputat',
+    default: 'More Ink. | More Ink.',
     template: '%s | More Ink.'
   },
   description: 'More Ink. is an Indonesian rock band based in Ciputat, South Tangerang. Formed in 2023, crafting raw sounds, unfiltered vibrations, and deep ink-inspired frequencies.',
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'id_ID',
-    url: 'https://moreink.com',
+    url: 'https://www.moreink.web.id',
     siteName: 'More Ink. Official',
     title: 'More Ink. | Original Sound',
     description: 'The official sound of More Ink. Indonesian rock band based in Ciputat, South Tangerang.',
@@ -72,11 +73,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="id" className="dark">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+        <link rel="icon" href="/favicon.ico" />
       </head>
       <body className="font-body antialiased bg-background text-white selection:bg-white selection:text-black">
         <FirebaseClientProvider>
